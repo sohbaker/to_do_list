@@ -1,11 +1,27 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
- get '/' do
+LIST_OF_ACTIONS = []
+
+get '/' do
+  if params["action_item"]
    todo = params["action_item"]
-   list_of_actions = []
+   add_item(todo)
+  end
 
-   list_of_actions << todo
-   erb :index, :locals => {:todo => todo, :list_of_actions => list_of_actions}
+  if params["find_and_edit"]
+    edit = params["find_and_edit"]
+    edit_item(edit)
+  end
 
- end
+  erb :index, :locals => {:todo => todo, :list_of_actions => LIST_OF_ACTIONS, :edit => edit}
+end
+
+def add_item(todo)
+  LIST_OF_ACTIONS << todo
+end
+
+def edit_item(edit)
+  position_in_list = LIST_OF_ACTIONS.index("#{edit}")
+  LIST_OF_ACTIONS.delete_at(position_in_list.to_i)
+end
