@@ -7,4 +7,5 @@ require 'sinatra/reloader'
 
    list_of_actions << todo
    erb :index, :locals => {:todo => todo, :list_of_actions => list_of_actions}
+
  end
