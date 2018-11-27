@@ -18,8 +18,8 @@ get '/' do
     use_list.edit_item(find_item, change_to)
   end
 
-  if params["mark as complete"]
-    change_status = params["mark as complete"]
+  if params["complete"]
+    change_status = params["complete"]
     use_list.mark_complete(change_status)
   end
 
@@ -35,7 +35,7 @@ class ToDoItem
 
   def todo_list_entry
     {
-      :item => @todo,
+      :action => @todo,
       :status => @status,
       :filter => @filter
     }
@@ -49,17 +49,17 @@ class ManageToDo
   end
 
   def edit_item(find_item, change_to)
-    found_item = LIST_OF_ACTIONS.find { |y| y[:item] == "#{find_item}"}
+    found_item = LIST_OF_ACTIONS.find { |y| y[:action] == "#{find_item}"}
 
     if found_item == nil
       return "Couldn\'t find that item in your to do list"
     else
-      found_item[:item] = "#{change_to}"
+      found_item[:action] = "#{change_to}"
     end
   end
 
   def mark_complete(change_status)
-    complete_item = LIST_OF_ACTIONS.find { |y| y[:item] == "#{change_status}"}
+    complete_item = LIST_OF_ACTIONS.find { |y| y[:action] == "#{change_status}"}
 
     if complete_item == nil
       return "Couldn\'t find that item in your to do list"
