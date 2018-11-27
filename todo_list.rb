@@ -25,7 +25,7 @@ get '/' do
 
   if params["display_all"]
     choose_view = "all"
-    use_list.view_full_list(choose_view)
+    display_list = use_list.view_full_list(choose_view)
   end
 
   if params["display_active"] || params["display_complete"]
@@ -34,9 +34,10 @@ get '/' do
     elsif params["display_complete"]
       choose_view = "complete"
     end
-    use_list.view_filtered_list(choose_view)
+    display_list = use_list.view_filtered_list(choose_view)
   end
-  erb :index, :locals => {:list_of_actions => LIST_OF_ACTIONS, :list_to_display => @list_to_display, :find_item => find_item, :change_status => change_status, :choose_view => choose_view}
+
+  erb :index, :locals => {:list_of_actions => LIST_OF_ACTIONS, :find_item => find_item, :change_status => change_status, :choose_view => choose_view, :display_list => display_list}
 end
 
 class ToDoItem
@@ -82,30 +83,24 @@ class ManageToDo
   end
 
   def view_full_list(choose_view)
-      @list_to_display = LIST_OF_ACTIONS.find_all do |y|
-      p y[:filter]
-      p y[:filter] == "#{choose_view}"
+    full_list = LIST_OF_ACTIONS.find_all do |y|
       y[:filter] == "#{choose_view}"
     end
-    p @list_to_display.to_a
-    p LIST_OF_ACTIONS
-    p choose_view
-    @list_to_display = @list_to_display.to_a
 
-    if @list_to_display == nil
+    if full_list == nil
       return " " # (error message)
     else
-      return @list_to_display
+      return full_list
     end
   end
 
   def view_filtered_list(choose_view)
-    @list_to_display = LIST_OF_ACTIONS.collect { |y| y[:status] == "#{choose_view}"}
+    filtered_list = LIST_OF_ACTIONS.find_all { |y| y[:status] == "#{choose_view}"}
 
-    if @list_to_display == nil
+    if filtered_list == nil
       return " " # (error message)
     else
-      return @list_to_display
+      return filtered_list
     end
   end
 end
