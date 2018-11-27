@@ -14,7 +14,22 @@ class ToDoListTest < Test::Unit::TestCase
   def test_it_says_welcome_to_todo_list
     get '/'
     assert last_response.ok?
-    assert last_response.body.include?('WELCOME TO YOUR TO DO LIST') 
+    assert last_response.body.include?('WELCOME TO YOUR TO DO LIST')
+  end
+
+  def test_it_adds_an_item_to_the_list
+    get '/', :action_item => 'test'
+    assert last_response.body.include?('test')
+  end
+
+  def test_it_will_edit_an_item_in_the_list
+    get '/', :find => 'test', :edit => 'passed'
+    assert last_response.body.include?('passed')
+  end
+
+  def test_it_will_mark_an_item_as_complete
+    get '/', :complete => 'passed'
+    assert last_response.body.include?('complete')
   end
 
 end

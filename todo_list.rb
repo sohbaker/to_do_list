@@ -64,7 +64,7 @@ class ManageToDo
     if complete_item == nil
       return "Couldn\'t find that item in your to do list"
     else
-      complete_item[:status] = 'completed'
+      complete_item[:status] = 'complete'
     end
   end
 end
