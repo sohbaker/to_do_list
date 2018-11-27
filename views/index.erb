@@ -1,17 +1,16 @@
 <html>
   <head></head>
   <body>
-    <p>
-      <strong>WELCOME TO YOUR TO DO LIST</strong>
-    </p>
+
+    <h1><strong>WELCOME TO YOUR TO DO LIST</strong></h1>
 
     <form>
-      <input type='text' name='action_item' />
+      <input type='text' name='add_item' />
       <input type='submit' value='Add an action' />
     </form>
 
     <form>
-    <input type='text' name='find' value='name of item' />
+    <input type='text' name='find' value='name of action' />
     <input type='text' name='edit' value='change to'  /><input type='submit' value="Edit an action"/>
     </form>
 
@@ -19,9 +18,12 @@
     <input type='text' name='complete' value='mark as complete'/><input type='submit' value="Complete an action"/>
     </form>
 
-    <p>
-      <%= LIST_OF_ACTIONS %>
-    </p>
+    <form>
+      <p>Filter list by: <input type='submit' name="display_all" value="All"/><input type='submit' name="display_active" value="Active"/><input type='submit' name="display_complete" value="Completed"/>
+        </p>
+      </form>
+
+    <h4><strong>Here is your ToDo List:</strong></h4><br> <%= LIST_OF_ACTIONS %> <%= display_list %>
 
   </body>
 </html>
