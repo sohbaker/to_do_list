@@ -5,7 +5,7 @@
     <h1><strong>WELCOME TO YOUR TO DO LIST</strong></h1>
 
     <form>
-      <input type='text' name='action_item' />
+      <input type='text' name='add_item' />
       <input type='submit' value='Add an action' />
     </form>
 
@@ -18,7 +18,12 @@
     <input type='text' name='complete' value='mark as complete'/><input type='submit' value="Complete an action"/>
     </form>
 
-    <h4><strong>Here is your ToDo List:</strong></h4><br>  <%= LIST_OF_ACTIONS %>
+    <form>
+      <p>Filter list by: <input type='submit' name="display_all" value="All"/><input type='submit' name="display_active" value="Active"/><input type='submit' name="display_complete" value="Completed"/>
+        </p>
+      </form>
+
+    <h4><strong>Here is your ToDo List:</strong></h4><br> <%= LIST_OF_ACTIONS %> <%= @list_to_display %>
 
   </body>
 </html>

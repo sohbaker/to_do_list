@@ -18,7 +18,7 @@ class ToDoListTest < Test::Unit::TestCase
   end
 
   def test_it_adds_an_item_to_the_list
-    get '/', :action_item => 'test'
+    get '/', :add_item => 'test'
     assert last_response.body.include?('test')
   end
 
@@ -30,6 +30,17 @@ class ToDoListTest < Test::Unit::TestCase
   def test_it_will_mark_an_item_as_complete
     get '/', :complete => 'passed'
     assert last_response.body.include?('complete')
+  end
+
+  def test_it_will_store_more_than_one_action
+    get '/', :add_item => 'cuppa'
+    assert last_response.body.include?('cuppa')
+  end
+
+  def test_filter_by_all_will_display_all_items_in_list
+    get '/', :all => 'all'
+    assert last_response.body.include?('test')
+    assert last_response.body.include?('cuppa')
   end
 
 end
