@@ -1,6 +1,6 @@
 require 'sinatra'
 
-class ToDoItem
+class AddToDoItem
   def initialize(todo)
     @todo = todo
     @status = "active"

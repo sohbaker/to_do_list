@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require '../Todo_list/manage_todo'
-require '../Todo_list/todo_item'
+require '../Todo_list/add_todo_item'
 gem 'rack-test'
 
 LIST_OF_ACTIONS = []
@@ -39,5 +39,5 @@ get '/' do
     display_list = use_list.view_filtered_list(choose_view)
   end
 
-  erb :index, :locals => {:list_of_actions => LIST_OF_ACTIONS, :choose_view => choose_view, :display_list => display_list}
+  erb :index, :locals => {:list_of_actions => LIST_OF_ACTIONS, :display_list => display_list}
 end

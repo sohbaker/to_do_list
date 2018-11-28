@@ -1,9 +1,9 @@
 require 'sinatra'
-require '../Todo_list/todo_item'
+require '../Todo_list/add_todo_item'
 
 class ManageToDo
   def add_item(todo)
-    add_to_list = ToDoItem.new(todo)
+    add_to_list = AddToDoItem.new(todo)
     LIST_OF_ACTIONS << add_to_list.todo_list_entry
   end
 
@@ -21,16 +21,14 @@ class ManageToDo
     complete_item = LIST_OF_ACTIONS.find { |y| y[:action] == "#{change_status}"}
 
     if complete_item == nil
-      return " " # need to consider error message in erb
+      return " " # need to consider adding an error message in erb
     else
       complete_item[:status] = 'complete'
     end
   end
 
   def view_full_list(choose_view)
-    full_list = LIST_OF_ACTIONS.find_all do |y|
-      y[:filter] == "#{choose_view}"
-    end
+    full_list = LIST_OF_ACTIONS.find_all { |x| x[:filter] == "#{choose_view}"}
 
     if full_list == nil
       return " " # (error message)
