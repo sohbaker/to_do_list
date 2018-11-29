@@ -1,14 +1,24 @@
 require 'pg'
 
-class Database
+class RunDatabase
   def initialize
-    conn = PG.connect(
-      dbname: 'postgres',
-      host: 'localhost'
-    )
-    results = conn.exec("SELECT * from todo_list")
+    connect = ManageDatabase.new
+    # begin
+      db = PG.connect(
+        dbname: 'postgres',
+        host: 'localhost'
+      )
+      db.exec(connect.save)
+    #   ensure
+    #   db.close
+    # end
+    results = db.exec("SELECT * from todo_list")
+    puts results.values
+  end
+end
 
-    p results
-    puts results.getvalue(0,0)
+class ManageDatabase
+  def save
+    "INSERT into todo_list VALUES ('test','test');"
   end
 end
