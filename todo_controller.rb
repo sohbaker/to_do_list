@@ -2,7 +2,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require '../Todo_list/manage_todo'
 require '../Todo_list/add_todo_item'
-require 'pp'
+# require 'pp'
 gem 'rack-test'
 
 LIST_OF_ACTIONS = []
@@ -28,7 +28,7 @@ get '/' do
 
   if params["display_all"]
     choose_view = "all"
-    display_list = pp use_list.view_full_list(choose_view)
+    display_list = use_list.view_full_list(choose_view)
     p display_list
   end
 
@@ -38,7 +38,7 @@ get '/' do
     elsif params["display_complete"]
       choose_view = "complete"
     end
-    display_list = pp use_list.view_filtered_list(choose_view)
+    display_list = use_list.view_filtered_list(choose_view)
   end
 
   erb :index, :locals => {:list_of_actions => LIST_OF_ACTIONS, :display_list => display_list}
