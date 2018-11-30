@@ -41,17 +41,13 @@ class ManageDatabase
 
   def view_active_list
     sql = "SELECT * from todo_list WHERE status = 'active';"
-    display_list = RunDatabase.run(sql).values #returns only the first value in the database
+    display_list = RunDatabase.run(sql).values
     display_list
   end
 
   def view_completed_list
     sql = "SELECT * from todo_list WHERE status = 'complete';"
-    display_list = RunDatabase.run(sql).values #returns only the first value in the database
+    display_list = RunDatabase.run(sql).values
     display_list
-  end
-
-  def exit
-    db.close
   end
 end

@@ -14,9 +14,5 @@ class RunDatabase
       db.close
       end
     return result
-    # if db = true
-    #   return "get started with to do list"
-    # end
   end
-
 end
