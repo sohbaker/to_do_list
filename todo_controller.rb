@@ -30,9 +30,11 @@ get '/' do
     if params["display_active"]
       display_list = use_list.view_active_list
     elsif params["display_complete"]
+      puts "display complete"
       display_list = use_list.view_completed_list
     end
-    return display_list
+
+    # return display_list (can't use return here because it stops the program, and won't inject the information to the erb file)
   end
 
   erb :index, :locals => {:display_list => display_list}

@@ -4,21 +4,17 @@ require 'pg'
 class ManageDatabase
   def initialize
     @connect = RunDatabase.new
-    @log_number = 0
   end
 
   def save_to_database(data_to_save)
     sql = data_to_save
     RunDatabase.run(sql).first
-  end
-
-  def connect_to_database
-    RunDatabase.new
+    # delete_completed
   end
 
   def add_item(item)
-    @log_number = @log_number + 1
-    data = "INSERT into todo_list VALUES ('#{@log_number.to_i}','#{item}','active');"
+    # postgres id column will auto increment (look up how to do this)
+    data = "INSERT into todo_list VALUES ('#{item}','active');"
     save_to_database(data)
     return @log_number
   end
@@ -33,21 +29,34 @@ class ManageDatabase
     save_to_database(data)
   end
 
+  # def delete_completed
+  #   sql = "DELETE FROM todo_list WHERE status = 'complete';"
+  #   delete = RunDatabase.run(sql).values
+  #   delete
+  # end
+
   def view_full_list
     sql = "SELECT * from todo_list;"
     display_list = RunDatabase.run(sql).values
-    display_list
+    return display_list.join(' ')
   end
 
   def view_active_list
     sql = "SELECT * from todo_list WHERE status = 'active';"
     display_list = RunDatabase.run(sql).values
     display_list
+
   end
 
   def view_completed_list
-    sql = "SELECT * from todo_list WHERE status = 'complete';"
+    sql = "SELECT * FROM todo_list WHERE status = 'complete';"
     display_list = RunDatabase.run(sql).values
     display_list
+    # display_list.map do |row|
+    #   { action: row[0],
+    #     status: row[1]
+    #   }
+    # end
   end
+
 end
