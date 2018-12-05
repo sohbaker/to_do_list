@@ -1,18 +1,14 @@
 require 'sinatra'
 require 'sinatra/reloader'
-require '../Todo_list/manage_todo'
-require '../Todo_list/add_todo_item'
-require 'pp'
+require '../Todo_list/manage_database'
 gem 'rack-test'
 
-LIST_OF_ACTIONS = []
-
 get '/' do
-  use_list = ManageToDo.new
+  use_list = ManageDatabase.new
 
   if params["add_item"]
-   todo = params["add_item"]
-   use_list.add_item(todo)
+   action = params["add_item"]
+   use_list.add_item(action)
   end
 
   if params["find"] && params["edit"]
@@ -27,19 +23,19 @@ get '/' do
   end
 
   if params["display_all"]
-    choose_view = "all"
-    display_list = pp use_list.view_full_list(choose_view)
-    p display_list
+    display_list = use_list.view_full_list
   end
 
   if params["display_active"] || params["display_complete"]
     if params["display_active"]
-      choose_view = "active"
+      display_list = use_list.view_active_list
     elsif params["display_complete"]
-      choose_view = "complete"
+      puts "display complete"
+      display_list = use_list.view_completed_list
     end
-    display_list = pp use_list.view_filtered_list(choose_view)
+
+    # return display_list (can't use return here because it stops the program, and won't inject the information to the erb file)
   end
 
-  erb :index, :locals => {:list_of_actions => LIST_OF_ACTIONS, :display_list => display_list}
+  erb :index, :locals => {:display_list => display_list}
 end

@@ -1,6 +1,6 @@
 ENV['RACK_ENV'] = 'test'
 
-require './todo_list.rb'
+require './todo_controller.rb'
 require 'test/unit'
 require 'rack/test'
 
