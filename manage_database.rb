@@ -38,25 +38,32 @@ class ManageDatabase
   def view_full_list
     sql = "SELECT * from todo_list;"
     display_list = RunDatabase.run(sql).values
-    return display_list.join(' ')
+    order_list = display_list.each do |row|
+                    row
+                  end
+    order_list
   end
 
   def view_active_list
     sql = "SELECT * from todo_list WHERE status = 'active';"
     display_list = RunDatabase.run(sql).values
-    display_list
-
+    order_list = display_list.each do |row|
+                    row
+                  end
+    order_list
   end
 
   def view_completed_list
     sql = "SELECT * FROM todo_list WHERE status = 'complete';"
     display_list = RunDatabase.run(sql).values
-    display_list
-    # display_list.map do |row|
-    #   { action: row[0],
-    #     status: row[1]
-    #   }
-    # end
+    order_list = display_list.each do |row|
+                    row
+                  end
+    order_list
+  end
+
+  def number_of_active_todos
+    view_active_list.display_list
   end
 
 end
