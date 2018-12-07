@@ -1,63 +1,62 @@
 <html>
   <head>
-    <style>
-      body {
-        background: MediumPurple;
-        font-family: 'Shadows Into Light', cursive;
-      }
-      div.centre_column {
-        max-width: 500px;
-        margin: auto;
-      }
-
-      h2 {
-        text-align: center;
-      }
-    </style>
-    <!-- <link rel='stylesheet' type='text/css' href='../public/index.css'/> -->
+    <link rel='stylesheet' type='text/css' href='/index.css'/>
   </head>
 
   <body>
     <div class='centre_column'>
       <h2><strong>WELCOME TO YOUR TO DO LIST</strong></h2>
-      <!-- <p>You can use this application to manage your to do list, by:</p>
-        <ul>
-          <li>adding a todo action</li>
-          <li>editing a todo action</li>
-          <li>marking an action as completed</li>
-        </ul>
-      <p>You can also view all your stored actions, as well as view which are completed, and which are oustanding.</p>
 
-      <h4>Use the todo list application below:</h4> -->
+      <div class='add_item'>
+        <form>
+          <input type='text' name='add_item' placeholder='What needs to be done?' size='80' required/>
+          <input type='submit' value='Add' />
+        </form>
+      </div>
 
-      <form>
-        <input type='text' name='add_item' placeholder='What needs to be done?'/>
-        <input type='submit' value='Add' />
-      </form>
+      <div class='edit_complete'>
+        <div class='edit'>
+          <form>
+            <input type='text' name='find' placeholder='name of action' required/>
+            <input type='text' name='edit' placeholder='change to'required/>
+            <input type='submit' value="Edit" class='edit_button'/>
+          </form>
+        </div>
 
-      <!-- <p>
-        <!-- <em style="color: navy; font-size: 0.8em;">Note: all actions are automatically input as active. Once completed you can update them using 'complete an action' below</em>  <!-- em is usually 12pt sized font -->
-      <!-- </p> -->
+        <div class='complete'>
+          <form>
+            <input type='text' name='complete' placeholder='mark as complete' required/>
+            <input type='submit' value="Complete"/>
+          </form>
+        </div>
+      </div>
 
-      <form>
-        <input type='text' name='find' placeholder='name of action'/>
-        <input type='text' name='edit' placeholder='change to'/>
-        <input type='submit' value="Edit"/>
-      </form>
+      <div class='success_message'>
+        <p><%= message %></p>
+      </div>
 
-      <form>
-        <input type='text' name='complete' placeholder='mark as complete'/>
-        <input type='submit' value="Complete"/>
-      </form>
+      <div class='items_left_and_list_views'>
+        <div class='count_active'>
+          <p><!-- result --> _ items left to complete</p>
+        </div>
 
-      <p><!-- result --> _ items left.</p>
+        <div class='list_buttons'>
+          <form>
+            <p><input type='submit' name="display_all" value="All"/><input type='submit' name="display_active" value="Active"/><input type='submit' name="display_complete" value="Completed"/></p>
+          </form>
+        </div>
+      </div>
 
-      <form>
-        <p><input type='submit' name="display_all" value="All"/><input type='submit' name="display_active" value="Active"/><input type='submit' name="display_complete" value="Completed"/></p>
-      </form>
+      <div class='display_postgres'>
+        <p><%= display_list %></p> <!-- can run each do in erb, but isn't usually shown until the user clicks, so doesn't work when you first load the page --> <!-- use yield here and define index.erb as layout, then set each /page as it's own erb file to be input here -->
+      </div>
 
-      <p><%= display_list %></p> <!-- can run each do in erb, but isn't usually shown until the user clicks, so doesn't work when you first load the page -->
-
+      <div class='delete'
+        <form>
+          <input type='text' name="delete" placeholder='delete a todo' required/>
+          <input type='submit' value="Delete"/>
+        </form>
+      </div>
     </div>
   </body>
 

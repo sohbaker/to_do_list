@@ -1,3 +1,46 @@
+/* * {
+  border: 1px solid red;
+} */
+
+.edit_complete {
+  display: flex;
+  flex-direction: row;
+}
+
+.items_left_and_list_views {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.edit_button {
+  margin-right: 6px;
+}
+
 body {
-  background: yellow;
+  background: MediumPurple;
+  font-family: 'Shadows Into Light', cursive;
+}
+
+div.centre_column {
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
+}
+/*
+.add {
+  size: 100;
+} */
+
+input[type=submit] {
+  border-radius: 8px;
+}
+
+input[type=submit]:active {
+  border: 2px solid blue;
+  box-shadow: none;
+}
+
+input:focus {
+  outline: none;
 }
