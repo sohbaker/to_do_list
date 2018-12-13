@@ -2,36 +2,22 @@ require 'sinatra'
 require 'sinatra/reloader'
 require '../Todo_list/index_page'
 gem 'rack-test'
+require 'logger'
+
+set :logger, Logger.new(STDOUT)
 
 use_list = ManageDatabase.new
 
 get '/' do
-  if params["add_item"]
-    redirect to("/add_item")
-  elsif params["find"] && params["edit"]
-    redirect to('/edit_item')
-  elsif params["complete"]
-    redirect to('/mark_complete')
-  elsif params["display_all"]
-    redirect to('/view_all')
-  elsif params["display_active"]
-    redirect to('/view_active')
-  elsif params["display_complete"]
-    redirect to('/view_complete')
-  end
-
-  display_list = ""
+  items = use_list.view_full_list
   message = ""
 
-  erb :index, :locals => {:display_list => display_list, :message => message} #:result => result}
+  erb :index, :locals => {:items => items, :message => message} #:result => result}
 end
 
-get '/add_item' do
-   action = params["add_item"]
-   use_list.add_item(action)
-   message = "#{action} has been added to your list"
-
-  erb :index, :locals => {:display_list => display_list, :message => message} #:result => result}
+post '/items' do
+  use_list.add_item(params['description'])
+  redirect to("/")
 end
 
 get '/edit_item' do
@@ -58,10 +44,9 @@ end
 get '/view_all' do
   if params["display_all"]
     display_list = use_list.view_full_list
-    display_list
   end
 
-  erb :index, :locals => {:display_list => display_list} #:result => result}
+  erb :index, :locals => {:display_list => display_list, :message => ''} #:result => result}
 end
 
 get '/view_active' do
@@ -80,7 +65,11 @@ get '/view_complete' do
   erb :index, :locals => {:display_list => display_list, :message => message} #:result => result}
 end
 
-get '/delete' do
+delete '/todos/:id' do
+  # /todos/1
+  # params["id"]
+  # => 1
+
   if params["delete"]
     delete_this = params["delete"]
     use_list.user_deletes(delete_this)

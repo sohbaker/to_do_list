@@ -6,38 +6,29 @@ class ManageDatabase
     @connect = RunDatabase.new
   end
 
-  def save_to_database(data_to_save)
-    sql = data_to_save
-    RunDatabase.run(sql).first
+  def execute_query(query)
+    RunDatabase.run(query).first
     # delete_completed
   end
 
-  def add_item(item)
-    # postgres id column will auto increment (look up how to do this)
-    data = "INSERT into todo_list VALUES ('#{item}','active');"
-    save_to_database(data)
+  def add_item(description)
+    execute_query("INSERT into items(description) VALUES ('#{description}');")
   end
 
   def edit_item(item_to_edit, change_to)
-    data = "UPDATE todo_list SET action = '#{change_to}' WHERE action = '#{item_to_edit}';"
-    save_to_database(data)
+    execute_query("UPDATE items SET description = '#{change_to}' WHERE description = '#{item_to_edit}';")
   end
 
   def mark_complete(completed_action)
-    data = "UPDATE todo_list SET status = 'complete' WHERE action = '#{completed_action}';"
-    save_to_database(data)
+    execute_query("UPDATE items SET active = false WHERE description = '#{completed_action}';")
   end
 
   def view_full_list
-    sql = "SELECT * from todo_list;"
-    display_list = RunDatabase.run(sql).values
-    display_list.each do |row|
-                    row
-                  end
+    RunDatabase.run("SELECT * from items;").values
   end
 
   def view_active_list
-    sql = "SELECT * from todo_list WHERE status = 'active';"
+    sql = "SELECT * from items WHERE active = true;"
     display_list = RunDatabase.run(sql).values
     display_list.each do |row|
                     row
@@ -45,16 +36,15 @@ class ManageDatabase
   end
 
   def view_completed_list
-    sql = "SELECT * FROM todo_list WHERE status = 'complete';"
+    sql = "SELECT * FROM items WHERE active = false;"
     display_list = RunDatabase.run(sql).values
     display_list.each do |row|
                     row
                     end
   end
 
-  def user_deletes(delete_action)
-    data = "DELETE FROM todo_list WHERE action = '#{delete_action}';"
-    save_to_database(data)
+  def delete_item(id)
+    execute_query("DELETE FROM items WHERE id = #{id};")
   end
 
   # def delete__all_completed

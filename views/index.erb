@@ -7,9 +7,9 @@
     <div class='centre_column'>
       <h2><strong>WELCOME TO YOUR TO DO LIST</strong></h2>
 
-      <div class='add_item'>
-        <form>
-          <input type='text' name='add_item' placeholder='What needs to be done?' size='80' required/>
+      <div>
+        <form action="/items" method="POST">
+          <input type='text' name='description' placeholder='What needs to be done?' size='80' required />
           <input type='submit' value='Add' />
         </form>
       </div>
@@ -48,7 +48,10 @@
       </div>
 
       <div class='display_postgres'>
-        <p><%= display_list %></p> <!-- can run each do in erb, but isn't usually shown until the user clicks, so doesn't work when you first load the page --> <!-- use yield here and define index.erb as layout, then set each /page as it's own erb file to be input here -->
+        <p><% items.each do |item| %>
+          <ul> <li> <%= item[1] %> </li> </ul>
+          <% end %>
+        </p> <!-- can run each do in erb, but isn't usually shown until the user clicks, so doesn't work when you first load the page --> <!-- use yield here and define index.erb as layout, then set each /page as it's own erb file to be input here -->
       </div>
 
       <div class='delete'
