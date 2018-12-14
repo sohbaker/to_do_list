@@ -15,9 +15,38 @@ get '/' do
   erb :index, :locals => {:items => items, :message => message} #:result => result}
 end
 
-post '/items' do
+get '/items' do # retrieve a list of resources
+
+end
+
+get '/items/:id' do # retrieve a single record
+  jbjb
+end
+
+post '/items' do # create a new record via the post method
   use_list.add_item(params['description'])
   redirect to("/")
+
+  # item = ManageDatabase.new params["description"]
+  # if item.save
+  #   status 201
+  # else
+  #   status 500
+  # end
+end
+
+put '/items/:id' do # update an existing record
+
+end
+
+delete '/items/:id' do # destroy a record using delete
+  item = ManageDatabase.get params[:id]
+  if item.destroy
+
+
+  use_list.user_deletes(params["id"])
+  redirect to("/")
+  end
 end
 
 get '/edit_item' do
@@ -41,14 +70,6 @@ get '/mark_complete' do
   erb :index, :locals => {:display_list => display_list, :message => message} #:result => result}
 end
 
-get '/view_all' do
-  if params["display_all"]
-    display_list = use_list.view_full_list
-  end
-
-  erb :index, :locals => {:display_list => display_list, :message => ''} #:result => result}
-end
-
 get '/view_active' do
   if params["display_active"]
     display_list = use_list.view_active_list
@@ -60,20 +81,6 @@ end
 get '/view_complete' do
   if params["display_complete"]
     display_list = use_list.view_completed_list
-  end
-
-  erb :index, :locals => {:display_list => display_list, :message => message} #:result => result}
-end
-
-delete '/todos/:id' do
-  # /todos/1
-  # params["id"]
-  # => 1
-
-  if params["delete"]
-    delete_this = params["delete"]
-    use_list.user_deletes(delete_this)
-    message = "#{delete_this} has been deleted"
   end
 
   erb :index, :locals => {:display_list => display_list, :message => message} #:result => result}
