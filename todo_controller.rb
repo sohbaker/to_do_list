@@ -5,7 +5,6 @@ gem 'rack-test'
 require 'logger'
 use Rack::MethodOverride
 
-
 set :logger, Logger.new(STDOUT)
 
 database = ManageDatabase.new
@@ -17,32 +16,23 @@ get '/' do
   erb :index, :locals => {:items => items, :message => message} #:result => result}
 end
 
-# get '/items' do # retrieve a list of resources
-#   logger.info params
-# end
-#
-# get '/items/:id' do # retrieve a single record
-#
-# end
+get '/items/:id' do
+  logger.info params
+  item = database.find_by_id(params["id"])
+  erb :item, :locals => {:item => item}
+end
 
 post '/items' do # create a new record via the post method
   database.add_item(params['description'])
   redirect to("/")
-
-  # item = ManageDatabase.new params["description"]
-  # if item.save
-  #   status 201
-  # else
-  #   status 500
-  # end
 end
 
-put '/items/:id' do # update an existing record
-
-end
+# put '/items/:id' do # update an existing record
+#   logger
+#   redirect to("/")
+# end
 
 delete '/items' do # destroy a record using delete
-  logger.info params
   database.delete_item(params["id"])
   redirect to("/")
 end
