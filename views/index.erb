@@ -16,7 +16,7 @@
 
       <div class='edit_complete'>
         <div class='edit'>
-          <form>
+          <form action="/items/:id" method='POST'>
             <input type='text' name='find' placeholder='name of action' required/>
             <input type='text' name='edit' placeholder='change to'required/>
             <input type='submit' value="Edit" class='edit_button'/>
@@ -42,16 +42,28 @@
 
         <div class='list_buttons'>
           <form>
-            <p><input type='submit' name="display_all" value="All"/><input type='submit' name="display_active" value="Active"/><input type='submit' name="display_complete" value="Completed"/></p>
+            <p><input type='submit' name="display_all" value="All"/>
+              <input type='submit' name="display_active" value="Active"/>
+              <input type='submit' name="display_complete" value="Completed"/>
+            </p>
           </form>
         </div>
       </div>
 
       <div class='display_postgres'>
-        <p><% items.each do |item| %>
-          <ul> <li> <%= item[1] %> </li> </ul>
+        <ul>
+          <% items.each do |item| %>
+            <li>
+              <%= item %>
+              <form action="/items" method="post">
+                <input type='hidden' name='id' value=<%= item[0] %> />
+                <input name="_method" type="hidden" value="delete" />
+                <input type='submit' value='Delete'/>
+              </form>
+            </li>
           <% end %>
-        </p> <!-- can run each do in erb, but isn't usually shown until the user clicks, so doesn't work when you first load the page --> <!-- use yield here and define index.erb as layout, then set each /page as it's own erb file to be input here -->
+        </ul>
+      <!-- use yield here and define index.erb as layout, then set each /page as it's own erb file to be input here -->
       </div>
 
       <div class='delete'
