@@ -32,7 +32,7 @@ end
 #   redirect to("/")
 # end
 
-delete '/items' do # destroy a record using delete
+delete '/items/:id' do # destroy a record using delete
   database.delete_item(params["id"])
   redirect to("/")
 end

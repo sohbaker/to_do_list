@@ -55,8 +55,7 @@
           <% items.each do |item| %>
             <li>
               <a href="/items/<%= item[0] %>"><%= item[1] %></a>
-              <form action="/items" method="post">
-                <input type='hidden' name='id' value=<%= item[0] %> />
+              <form action="/items/<%= item[0] %>" method="post">
                 <input name="_method" type="hidden" value="delete" />
                 <input type='submit' value='Delete'/>
               </form>
