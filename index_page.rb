@@ -14,8 +14,8 @@ class ManageDatabase
     execute_query("INSERT into items(description) VALUES ('#{description}');")
   end
 
-  def edit_item(id, change_to)
-    execute_query("UPDATE items SET description = '#{change_to}' WHERE id = '#{id}';")
+  def update_item(description, id)
+    execute_query("UPDATE items SET description = '#{description}' WHERE id = '#{id}';")
   end
 
   def mark_complete(completed_action)

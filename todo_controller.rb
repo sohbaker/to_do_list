@@ -16,10 +16,10 @@ get '/' do
   erb :index, :locals => {:items => items, :message => message} #:result => result}
 end
 
-get '/items/:id' do
+get '/items/:id/edit' do
   logger.info params
-  item = database.find_by_id(params["id"])
-  erb :item, :locals => {:item => item}
+  item = database.find_by_id(params['id'])
+  erb :edit_item, :locals => {:item => item}
 end
 
 post '/items' do # create a new record via the post method
@@ -27,12 +27,12 @@ post '/items' do # create a new record via the post method
   redirect to("/")
 end
 
-# put '/items/:id' do # update an existing record
-#   logger
-#   redirect to("/")
-# end
+put '/items/:id' do # update an existing record
+  database.update_item(params['description'], params['id'])
+  redirect to("/")
+end
 
 delete '/items/:id' do # destroy a record using delete
-  database.delete_item(params["id"])
+  database.delete_item(params['id'])
   redirect to("/")
 end

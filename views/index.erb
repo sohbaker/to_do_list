@@ -54,7 +54,8 @@
         <ul>
           <% items.each do |item| %>
             <li>
-              <a href="/items/<%= item[0] %>"><%= item[1] %></a>
+              <%= item[1] %>
+              <a href="/items/<%= item[0] %>/edit">Edit</a>
               <form action="/items/<%= item[0] %>" method="post">
                 <input name="_method" type="hidden" value="delete" />
                 <input type='submit' value='Delete'/>
