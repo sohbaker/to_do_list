@@ -20,16 +20,18 @@
 
       <div class='items_left_and_list_views'>
         <div class='count_active'>
-          <p><!-- result --> _ items left to complete</p>
+          <p><%active_count%> items left to complete</p>
         </div>
 
         <div class='list_buttons'>
-          <form>
-            <p><input type='submit' name="display_all" value="All"/>
+          <p><input type='submit' name="display_all" value="All"/>
+            <form action="/items/true/view_active" method="post">
               <input type='submit' name="display_active" value="Active"/>
-              <input type='submit' name="display_complete" value="Completed"/>
-            </p>
-          </form>
+              <input name="active" type="hidden" value="true" />
+              <input name="_method" type="hidden" value="get" />
+            </form>
+            <input type='submit' name="display_complete" value="Completed"/>
+          </p>
         </div>
       </div>
 
@@ -53,9 +55,7 @@
             </li>
           <% end %>
         </ul>
-      <!-- use yield here and define index.erb as layout, then set each /page as it's own erb file to be input here -->
       </div>
-
     </div>
   </body>
 

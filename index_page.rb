@@ -18,8 +18,8 @@ class ManageDatabase
     execute_query("UPDATE items SET description = '#{description}' WHERE id = '#{id}';")
   end
 
-  def mark_complete(completed_action)
-    execute_query("UPDATE items SET active = false WHERE description = '#{completed_action}';")
+  def mark_complete(id)
+    execute_query("UPDATE items SET active = false WHERE id = '#{id}';")
   end
 
   def delete_item(id)
@@ -36,11 +36,14 @@ class ManageDatabase
 
   def view_active_list
     RunDatabase.run("SELECT * from items WHERE active = true;").values
-
   end
 
   def view_completed_list
     RunDatabase.run("SELECT * FROM items WHERE active = false;").values
+  end
+
+  def count_active
+    RunDatabase.run("SELECT COUNT(*) FROM items GROUP BY id HAVING active = true;")
   end
 
 end
