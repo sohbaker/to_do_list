@@ -10,23 +10,23 @@ set :logger, Logger.new(STDOUT)
 database = ManageDatabase.new
 
 get '/' do
-  items = database.view_full_list
-  message = ""
-  active_count = database.count_active
+  if params['status'] == 'active'
+    items = database.view_active_list
+  elsif params['status'] == 'complete'
+    items = database.view_completed_list
+  else
+    items = database.view_full_list
+  end
 
-  erb :index, :locals => {:items => items, :message => message, :active_count => active_count} #:result => result}
+  message = ""
+
+  erb :index, :locals => {:items => items, :message => message} #:result => result}
 end
 
 get '/items/:id/edit' do
   logger.info params
   item = database.find_by_id(params['id'])
   erb :edit_item, :locals => {:item => item}
-end
-
-get '/items/:status/active' do
-  logger.info params
-  items = database.view_active_list
-  erb :view_active, :locals => {:item => items}
 end
 
 post '/items' do # create a new record via the post method

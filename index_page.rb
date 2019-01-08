@@ -42,8 +42,8 @@ class ManageDatabase
     RunDatabase.run("SELECT * FROM items WHERE active = false;").values
   end
 
-  def count_active
-    RunDatabase.run("SELECT COUNT(*) FROM items GROUP BY id HAVING active = true;")
-  end
+  # def count_active
+  #   RunDatabase.run("SELECT COUNT(*) FROM items GROUP BY id HAVING active = true;")
+  # end
 
 end
