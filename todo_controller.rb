@@ -1,41 +1,50 @@
 require 'sinatra'
 require 'sinatra/reloader'
-require '../Todo_list/manage_database'
+require '../Todo_list/index_page'
 gem 'rack-test'
+require 'logger'
+use Rack::MethodOverride
+
+set :logger, Logger.new(STDOUT)
+
+database = ManageDatabase.new
 
 get '/' do
-  use_list = ManageDatabase.new
-
-  if params["add_item"]
-   action = params["add_item"]
-   use_list.add_item(action)
+  if params['status'] == 'active'
+    items = database.view_active_list
+  elsif params['status'] == 'complete'
+    items = database.view_completed_list
+  else
+    items = database.view_full_list
   end
 
-  if params["find"] && params["edit"]
-    find_item = params["find"]
-    change_to = params["edit"]
-    use_list.edit_item(find_item, change_to)
-  end
+  message = ""
 
-  if params["complete"]
-    change_status = params["complete"]
-    use_list.mark_complete(change_status)
-  end
+  erb :index, :locals => {:items => items, :message => message} #:result => result}
+end
 
-  if params["display_all"]
-    display_list = use_list.view_full_list
-  end
+get '/items/:id/edit' do
+  logger.info params
+  item = database.find_by_id(params['id'])
+  erb :edit_item, :locals => {:item => item}
+end
 
-  if params["display_active"] || params["display_complete"]
-    if params["display_active"]
-      display_list = use_list.view_active_list
-    elsif params["display_complete"]
-      puts "display complete"
-      display_list = use_list.view_completed_list
-    end
+post '/items' do # create a new record via the post method
+  database.add_item(params['description'])
+  redirect to("/")
+end
 
-    # return display_list (can't use return here because it stops the program, and won't inject the information to the erb file)
-  end
+put '/items/:id/mark_complete' do # update an existing record
+  database.mark_complete(params['id'])
+  redirect to("/")
+end
 
-  erb :index, :locals => {:display_list => display_list}
+put '/items/:id' do
+  database.update_item(params['description'], params['id'])
+  redirect to("/")
+end
+
+delete '/items/:id' do # destroy a record using delete
+  database.delete_item(params['id'])
+  redirect to("/")
 end

@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <link rel='stylesheet' type='text/css' href='/index.css'/>
+  </head>
+  <body>
+    <p>Edit your item below:</p>
+    <form action="/items/<%= item["id"] %>" method="post">
+      <input type="hidden" name="_method" value="put" />
+      <input type="text" name="description" value="<%= item["description"] %>"/>
+      <input type='submit' value='Update' />
+    </form>
+    <br>
+    <a href="/">return to homepage</a>
+  </body>
+</html>
