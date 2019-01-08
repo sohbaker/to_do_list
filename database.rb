@@ -1,7 +1,7 @@
 require 'pg'
 
-class RunDatabase
-  def self.run(sql)
+class Database
+  def self.run(query)
       begin
     db = PG.connect(
       dbname: 'postgres',
@@ -9,7 +9,7 @@ class RunDatabase
       user: 'postgres',
       password: 'dataadmin'
     )
-      result = db.exec(sql)
+      result = db.exec(query)
     ensure
       db.close
       end

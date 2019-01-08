@@ -37,7 +37,6 @@
             <li>
               <%= item[1] %>
               <a href="/items/<%= item[0] %>/edit">Edit</a>
-              <%= item[2] %>
               <form action="/items/<%= item[0] %>/mark_complete" method="post">
                 <input name="active" type="hidden" value="false" />
                 <input name="_method" type="hidden" value="put" />

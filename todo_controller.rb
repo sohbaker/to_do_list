@@ -1,13 +1,13 @@
 require 'sinatra'
 require 'sinatra/reloader'
-require '../Todo_list/index_page'
+require '../Todo_list/database_adapter'
 gem 'rack-test'
 require 'logger'
 use Rack::MethodOverride
 
 set :logger, Logger.new(STDOUT)
 
-database = ManageDatabase.new
+database = DatabaseAdapter.new
 
 get '/' do
   if params['status'] == 'active'
