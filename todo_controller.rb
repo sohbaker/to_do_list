@@ -19,8 +19,9 @@ get '/' do
   end
 
   message = ""
+  active_item_count = database.count_active["count"]
 
-  erb :index, :locals => {:items => items, :message => message} #:result => result}
+  erb :index, :locals => {:items => items, :message => message, :active_item_count => active_item_count}
 end
 
 get '/items/:id/edit' do
