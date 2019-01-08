@@ -1,13 +1,13 @@
 require 'sinatra'
 require 'sinatra/reloader'
-require '../Todo_list/index_page'
+require '../Todo_list/database_adapter'
 gem 'rack-test'
 require 'logger'
 use Rack::MethodOverride
 
 set :logger, Logger.new(STDOUT)
 
-database = ManageDatabase.new
+database = DatabaseAdapter.new
 
 get '/' do
   if params['status'] == 'active'
@@ -19,8 +19,9 @@ get '/' do
   end
 
   message = ""
+  active_item_count = database.count_active["count"]
 
-  erb :index, :locals => {:items => items, :message => message} #:result => result}
+  erb :index, :locals => {:items => items, :message => message, :active_item_count => active_item_count}
 end
 
 get '/items/:id/edit' do
