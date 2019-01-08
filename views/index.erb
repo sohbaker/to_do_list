@@ -40,7 +40,9 @@
               <form action="/items/<%= item[0] %>/mark_complete" method="post">
                 <input name="active" type="hidden" value="false" />
                 <input name="_method" type="hidden" value="put" />
+              <% if item[2] == 't' %>
                 <input type='submit' value='Mark as completed'/>
+              <% end %>
               </form>
 
               <form action="/items/<%= item[0] %>" method="post">
